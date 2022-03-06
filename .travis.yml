@@ -1,0 +1,17 @@
+dist: trusty
+
+language: java
+
+jdk:
+  - oraclejdk13
+
+env:
+ global:
+   - CODECOV_TOKEN="2f735df4-a049-416a-92d3-630f6bc31d52"
+
+script:
+  - chmod +x ./.ci/script.sh 
+  - ./.ci/script.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
