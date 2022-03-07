@@ -1,0 +1,11 @@
+version: "3"
+services:
+  movies-battle:
+    image: muriloalvesdev/movies-battle
+    network_mode: bridge
+    container_name: movies-battle
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    restart: unless-stopped
