@@ -5,8 +5,8 @@ jdk:
 
 script:
   - chmod +x ./.ci/script.sh 
-  - ./.ci/script.sh
   - chmod +x mvnw
+  - ./.ci/script.sh
 
 env:
  global:
