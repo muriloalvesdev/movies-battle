@@ -1,3 +1,4 @@
 ignore:
 	- "br/com/moviesbattle/dto/data/*.java"
 	- "br/com/moviesbattle/exception/*.java"
+	- "br/com/moviesbattle/config/*.java"
