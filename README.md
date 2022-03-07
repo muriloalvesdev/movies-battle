@@ -28,3 +28,5 @@
 - Execute o script docker para fazer um build da imagem e subir o container: `chmod u+x docker-run.sh && ./docker-run.sh`
 - Comando `chmod` [Mais informações](https://guialinux.uniriotec.br/chmod/)
 - Após a aplicação realizar o build com sucesso, vá para o README.md do microservice [service-player](https://github.com/muriloalvesdev/service-player/blob/main/README.md) que é responsável por orquestrar tudo sobre o usuário, realize a instalação do projeto e siga as instruções de jogo.
+
+- Caso não tenha interesse em baixar o projeto e realizar esses procedimentos, você pode baixar a imagem pronta [aqui](https://hub.docker.com/r/muriloalvesdev/moviesbattle).
