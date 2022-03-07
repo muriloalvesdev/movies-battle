@@ -4,9 +4,9 @@ jdk:
   - openjdk11
 
 script:
-  - chmod +x ./.ci/script.sh 
-  - chmod +x mvnw
-  - ./.ci/script.sh
+  - sudo chmod +x ./.ci/script.sh 
+  - sudo chmod +x mvnw
+  - sudo ./.ci/script.sh
 
 env:
  global:
