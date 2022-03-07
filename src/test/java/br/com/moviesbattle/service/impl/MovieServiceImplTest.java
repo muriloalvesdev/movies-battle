@@ -1,5 +1,6 @@
 package br.com.moviesbattle.service.impl;
 
+import br.com.moviesbattle.dto.convert.MovieConvert;
 import br.com.moviesbattle.dto.data.MovieDTO;
 import br.com.moviesbattle.dto.data.ResponseData;
 import br.com.moviesbattle.exception.TitleNotFoundException;
@@ -7,6 +8,7 @@ import br.com.moviesbattle.model.Movie;
 import br.com.moviesbattle.providers.MovieProviderDTOList;
 import br.com.moviesbattle.providers.MovieProviderEntityList;
 import br.com.moviesbattle.repository.MovieRepository;
+import br.com.moviesbattle.repository.specification.MovieSpecification;
 import br.com.moviesbattle.service.MovieService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,12 +16,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.mockito.Mock;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -28,12 +33,19 @@ import static org.mockito.Mockito.mock;
 @ActiveProfiles("test")
 class MovieServiceImplTest {
     private MovieService service;
+
     private MovieRepository repository;
+    private MovieSpecification specification;
+
+    @Mock
+    private Specification<Movie> specificationMovie;
 
     @BeforeEach
     void beforeEach() {
         this.repository = mock(MovieRepository.class);
-        this.service = new MovieServiceImpl(this.repository);
+        this.specification = mock(MovieSpecification.class);
+
+        this.service = new MovieServiceImpl(this.repository, this.specification);
     }
 
     @DisplayName("should save with success")
@@ -73,6 +85,13 @@ class MovieServiceImplTest {
                 .existsByTitle("x-men"))
                 .willReturn(Boolean.TRUE);
 
+        given(this.repository.findAll(this.specificationMovie))
+                .willReturn(
+                        moviesDto.stream()
+                                .map(MovieConvert::convert)
+                                .collect(Collectors.toList())
+                );
+
         //WHEN
         final ResponseData responseData =
                 this.service.match("x-men", moviesDto);
@@ -89,7 +108,12 @@ class MovieServiceImplTest {
         given(this.repository
                 .existsByTitle("spider-man-test"))
                 .willReturn(Boolean.TRUE);
-
+        given(this.repository.findAll(this.specificationMovie))
+                .willReturn(
+                        moviesDto.stream()
+                                .map(MovieConvert::convert)
+                                .collect(Collectors.toList())
+                );
         //WHEN
         final ResponseData responseData =
                 this.service.match("spider-man-test", moviesDto);
