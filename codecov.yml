@@ -1,0 +1,3 @@
+ignore:
+	- "br.com.moviesbattle.dto/**/*.java"
+	- "br.com.moviesbattle.exception/*.java"
